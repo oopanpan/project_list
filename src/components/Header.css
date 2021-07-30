@@ -1,0 +1,10 @@
+.header {
+	top: 10px;
+	left: 10%;
+	position: absolute;
+}
+
+.header img {
+	height: 50px;
+	width: 50px;
+}
