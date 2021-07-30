@@ -1,10 +1,12 @@
 import React from 'react';
 
+import './CollectionTitle.css';
+
 function CollectionTitle() {
 	return (
-		<div>
-			<div>MY PROJECT</div>
-		</div>
+		<>
+			<div className='project-title'>MY PROJECT</div>
+		</>
 	);
 }
 
