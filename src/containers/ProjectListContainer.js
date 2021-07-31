@@ -1,18 +1,31 @@
-import React, { useState } from 'react';
-import CollectionTitle from '../components/CollectionTitle';
+import React, { useState, useEffect } from 'react';
 
+import { Row } from 'antd';
+import CollectionTitle from '../components/CollectionTitle';
 import ProjectItem from '../components/ProjectItem';
 import NewProjectButton from '../components/NewProjectButton';
 
+import './ProjectListContainer.css';
+
 function ProjectListContainer() {
 	const [projectList, setProjectList] = useState([]);
+	const [projectGroupClassName, setProjectGroupClassName] = useState(
+		'project-entry-group'
+	);
 
 	// Here we can have a useEffect to fetch projectList from the database to
+	useEffect(() => {
+		if (window.innerWidth <= 576) {
+			setProjectGroupClassName('project-entry-group-mobile');
+		} else {
+			setProjectGroupClassName('project-entry-group');
+		}
+	}, [window.innerWidth]);
 
 	const renderProjects = () => {
 		return projectList.map((project, index) => (
 			<ProjectItem
-				id={index}
+				index={index}
 				key={index}
 				project={project}
 				handleEditingProject={handleEditingProject}
@@ -30,26 +43,24 @@ function ProjectListContainer() {
 		setProjectList(newProjectList);
 	};
 
-	const handleEditingProject = (event, title) => {
+	const handleEditingProject = (event, title, index) => {
 		event.stopPropagation();
-		const targetedIndex = event.target.parentNode.id;
+		let [, month, day, year, time] = Date().split(' ');
+		let [hour, minute] = time.split(':');
 		const editedProject = {
-			...projectList[targetedIndex],
+			...projectList[index],
 			title: title,
-			date: Date(),
+			date: `${month} ${day},${year}  ${hour}:${minute}`,
 			editing: false,
 		};
 		const updatedProjectListArray = [...projectList];
-		updatedProjectListArray.splice(targetedIndex, 1, editedProject);
+		updatedProjectListArray.splice(index, 1, editedProject);
 		setProjectList(updatedProjectListArray);
 	};
 
-	const handleDelete = (event) => {
-		event.stopPropagation();
-		const targetedIndex = event.target.parentNode.id;
-		console.log(targetedIndex);
+	const handleDelete = (index) => {
 		const updatedProjectListArray = [...projectList];
-		updatedProjectListArray.splice(targetedIndex, 1);
+		updatedProjectListArray.splice(index, 1);
 		setProjectList(updatedProjectListArray);
 	};
 
@@ -57,7 +68,7 @@ function ProjectListContainer() {
 		<div className='project-container'>
 			<CollectionTitle />
 			<NewProjectButton addNewProject={addNewProject} />
-			<div>{renderProjects()}</div>
+			<div className={projectGroupClassName}>{renderProjects()}</div>
 		</div>
 	);
 }

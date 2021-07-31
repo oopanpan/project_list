@@ -1,0 +1,14 @@
+.project-container {
+	top: 100px;
+	position: relative;
+}
+
+.project-entry-group {
+	margin: 3rem 5rem 0rem;
+}
+
+.project-entry-group-mobile {
+	margin-top: 2rem;
+	margin-left: 0;
+	margin-right: 0;
+}

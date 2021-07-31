@@ -1,0 +1,11 @@
+.project-item-row {
+	background-color: white;
+	border-top: 1px solid rgba(201, 198, 198, 0.76);
+	border-bottom: 1px solid rgba(201, 198, 198, 0.76);
+	text-align: left;
+}
+
+.project-item-row p {
+	position: relative;
+	top: 50%;
+}
